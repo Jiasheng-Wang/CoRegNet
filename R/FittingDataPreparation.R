@@ -49,7 +49,12 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
 
     startend <- data.frame(matrix(nrow = nsplits, ncol = 3,0), stringsAsFactors = FALSE)
     length_seq <- rep(l,nsplits)
-    length_seq[1:k] <- length_seq[1:k]+1
+    if (k == 0) {
+      #No need to add anything
+    }else{
+      length_seq[1:k] <- length_seq[1:k]+1
+    }
+
 
     colnames(startend) <- c("Start","End","Length")
     startend$Length <- length_seq
@@ -87,16 +92,18 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
           load(paste0(Transform_CoPM_Dir,"/TransformedMatrix_",k,".RData"))
           GenePairsVsSims <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx),]
           temp_TCoPM <- rbind.data.frame(temp_TCoPM,GenePairsVsSims)
+          k <- k + 1
         }
         FittingData <- temp_TCoPM
         save(x = FittingData, file = paste0(FittingFile_Dir,"/FittingFiles_",j,".RData"))
       }else{
-        while(nrow(temp_TCoPM) <= SplitMatrix$Length[j]){
+        while(nrow(temp_TCoPM) <= SplitMatrix$Length[j] & k < Nfiles){
           load(paste0(Transform_CoPM_Dir,"/TransformedMatrix_",k,".RData"))
           GenePairsVsSims <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx),]
           temp_TCoPM <- rbind.data.frame(temp_TCoPM,GenePairsVsSims)
+          k <- k + 1
         }
-        FittingData <- temp_TCoPM[1:SplitMatrix$Length[j],]
+        FittingData <- temp_TCoPM[1:SplitMatrix$Length[j],,drop = FALSE]
         temp_TCoPM <- temp_TCoPM[-c(1:SplitMatrix$Length[j]),,drop = FALSE]
         save(x = FittingData, file = paste0(FittingFile_Dir,"/FittingFiles_",j,".RData"))
       }
