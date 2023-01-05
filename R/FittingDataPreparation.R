@@ -90,7 +90,7 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
       if (j == nrow(SplitMatrix)) {
         while(nrow(temp_TCoPM) < SplitMatrix$Length[j]){
           load(paste0(Transform_CoPM_Dir,"/TransformedMatrix_",k,".RData"))
-          GenePairsVsSims <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx),]
+          GenePairsVsSims <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx),,drop = FALSE]
           temp_TCoPM <- rbind.data.frame(temp_TCoPM,GenePairsVsSims)
           k <- k + 1
         }
@@ -99,7 +99,7 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
       }else{
         while(nrow(temp_TCoPM) <= SplitMatrix$Length[j] & k < Nfiles){
           load(paste0(Transform_CoPM_Dir,"/TransformedMatrix_",k,".RData"))
-          GenePairsVsSims <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx),]
+          GenePairsVsSims <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx),,drop = FALSE]
           temp_TCoPM <- rbind.data.frame(temp_TCoPM,GenePairsVsSims)
           k <- k + 1
         }
