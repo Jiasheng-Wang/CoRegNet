@@ -93,7 +93,7 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
     }
   }else{
     for (j in 1:nrow(SplitMatrix)) {
-      FittingData <- temp_TCoPM[SplitMatrix$Start[j]:SplitMatrix$End[j],]
+      FittingData <- temp_TCoPM[SplitMatrix$Start[j]:SplitMatrix$End[j],,drop = FALSE]
       save(x = FittingData, file = paste0(FittingFile_Dir,"/FittingFiles_",j,".RData"))
     }
   }
