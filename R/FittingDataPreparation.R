@@ -45,14 +45,24 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
   SplitContinuousNumber <- function(Number, nsplits){
     n <- Number
     l <- n %/% nsplits
+    k <- n %% nsplits
 
     startend <- data.frame(matrix(nrow = nsplits, ncol = 3,0), stringsAsFactors = FALSE)
-    colnames(startend) <- c("Start","End","Length")
-    startend$Start <- seq(0,(nsplits - 1)*l, by = l)+1
-    startend$End <- seq(l,nsplits*l, by = l)
-    startend$End[nsplits] <- startend$End[nsplits] + n %% nsplits
-    startend$Length <- startend$End - startend$Start + 1
+    length_seq <- rep(l,nsplits)
+    length_seq[1:k] <- length_seq[1:k]+1
 
+    colnames(startend) <- c("Start","End","Length")
+    startend$Length <- length_seq
+    startend$Start[1] <- 1
+    startend$End[1] <- startend$Start[1] + startend$Length[1] - 1
+    if (nrow(startend) > 1) {
+      for (ii in 2:nrow(startend)) {
+        startend$Start[ii] <- startend$End[ii-1] + 1
+        startend$End[ii] <- startend$Start[ii] + startend$Length[ii] - 1
+      }
+    }else{
+      #Done
+    }
     return(startend)
   }
   SplitMatrix <- SplitContinuousNumber(length(SigIdx),FittingFiles)
