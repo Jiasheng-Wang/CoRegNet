@@ -67,7 +67,7 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
   Nfiles <- grep("TransformedMatrix_",Nfiles)
   Nfiles <- length(Nfiles)
   load(paste0(Transform_CoPM_Dir,"/TransformedMatrix_",1,".RData"))
-  temp_TCoPM <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx),]
+  temp_TCoPM <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx),,drop =FALSE]
 
   if (Nfiles >= 2) {
     k <- 2
