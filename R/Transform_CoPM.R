@@ -47,6 +47,7 @@ Transform_CoPM <- function(RandCoPM_directory, save_path, NGenePairs, NTransform
       load(paste0(RandCoPM_directory,"/CPM_",j,".RData"))
       GenePairsVsSims[,j] <- M2[Assignment_table$istart[TransfromedMatrix_idx]:Assignment_table$iend[TransfromedMatrix_idx]]
       rm(M2)
+      gc()
     }
     rownames(GenePairsVsSims) <- seq(Assignment_table$istart[TransfromedMatrix_idx],Assignment_table$iend[TransfromedMatrix_idx])
     save(x = GenePairsVsSims,file = paste0(save_path,"/TransformedMatrix_",TransfromedMatrix_idx,".RData"))
