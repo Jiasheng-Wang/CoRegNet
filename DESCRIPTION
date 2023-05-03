@@ -4,7 +4,7 @@ Title: What the Package Does (Title Case)
 Version: 0.1.0
 Author: Jiasheng Wang
 Maintainer: Jiasheng Wang <jiasheng.wang@bcm.edu>
-Description: To generate Co-perturbation Network based on integrated data sets
+Description: To generate Co-regulation Network based on integrated data sets
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
@@ -12,5 +12,6 @@ Imports:
     parallel,
     VGAM,
     gamlss,
-    dplyr
+    dplyr,
+    Matrix
 RoxygenNote: 7.1.2

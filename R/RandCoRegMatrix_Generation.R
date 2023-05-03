@@ -1,19 +1,20 @@
 #' Generate Random Binary DEG matrix
 #'
-#' This function generates random co-perturbation Matrix. As each co-perturbation matrix is symmetric, it saves the upper_tir area of the matrix for saving the space
+#' This function generates random co-regulation Matrix. As each co-regulation matrix is symmetric, it saves the upper_tir area of the matrix for saving the space
 #'
-#' @param Ncores Number of CPU to simulate the binary matrix with given RowSum and ColSum, and calculate the co-perturbation matrix.
+#' @param Ncores Number of CPU to simulate the binary matrix with given RowSum and ColSum, and calculate the co-regulation matrix.
 #' @param EachCoreSims Number of matrix each core simulates
-#' @param RowSumVector The fixed RowSum Vecotor of true binary DEG matrix - Each row is an experiment
-#' @param ColSumVector The fixed ColSum Vecotor of true binary DEG matrix - Each column is a gene
-#' @param save_path The directory to save the simulated co-perturbation matrix
-#'
-#' @return save Simulated co-perturbation matrix with given rowsum and colsum of the true binary DEG matrix to the given directory
+#' @param RowSumVector The fixed RowSum Vecotor of true binary DEG matrix - Each row is a gene
+#' @param ColSumVector The fixed ColSum Vecotor of true binary DEG matrix - Each column is an experiment
+#' @param save_path The directory to save the simulated co-regulation matrix
+#' @param SaveSparse Save Results in Sparse Matrix/Vector
+
+#' @return save Simulated co-regulation matrix with given rowsum and colsum of the true binary DEG matrix to the given directory
 #' @export
 #'
 #' @examples
 #' RandCoPMatrix_Generation(Ncores = 20,EachCoreSims = 50,RowSumVector = c(2,3,4,1,5,2,3,6,3),ColSumVector = c(4,3,2,2,2,5,3,2,3,3), save_path = "~/RandBM/")
-RandCoPMatrix_Generation <- function(Ncores = 1,EachCoreSims = 1000, RowSumVector,ColSumVector,save_path){
+RandCoPMatrix_Generation <- function(Ncores = 1,EachCoreSims = 1000, RowSumVector,ColSumVector,save_path,SaveSparse = TRUE){
   ##Check save_path:
   if(dir.exists(save_path)){
   }else{
@@ -77,10 +78,16 @@ RandCoPMatrix_Generation <- function(Ncores = 1,EachCoreSims = 1000, RowSumVecto
       if(all(colSums(M0) == ColSumVector) &&
          all(rowSums(M0) == RowSumVector)){
         cc <- cc + 1
-        M1 <- t(M0) %*% M0
+        M1 <- M0 %*% t(M0)
         M2 <- M1[upper.tri(M1,diag = FALSE)]
 
-        save(x = M2,file = paste0(save_path,"/CPM_",(Ncores-1)*iters+cc,".RData"))
+        if(SaveSparse){
+          M2  <- as(M2 , "sparseVector")
+          save(x = M2,file = paste0(save_path,"/CRM_",(Ncores-1)*iters+cc,".RData"))
+        }else{
+          save(x = M2,file = paste0(save_path,"/CRM_",(Ncores-1)*iters+cc,".RData"))
+        }
+      
         rm(M0,M1,M2)
         gc()
       }else{
