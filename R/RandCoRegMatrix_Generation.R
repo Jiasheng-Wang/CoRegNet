@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' RandCoPMatrix_Generation(Ncores = 20,EachCoreSims = 50,RowSumVector = c(2,3,4,1,5,2,3,6,3),ColSumVector = c(4,3,2,2,2,5,3,2,3,3), save_path = "~/RandBM/")
-RandCoRegMatrix_Generation <- function(Ncores = 1,EachCoreSims = 1000, RowSumVector,ColSumVector,save_path,SaveSparse = TRUE){
+RandCoRegMatrix_Generation <- function(Ncores = 1,EachCoreSims = 1000, RowSumVector,ColSumVector,save_path,SaveSparse = FALSE){
   ##Check save_path:
   if(dir.exists(save_path)){
   }else{
