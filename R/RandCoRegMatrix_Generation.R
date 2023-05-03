@@ -26,7 +26,7 @@ RandCoRegMatrix_Generation <- function(Ncores = 1,EachCoreSims = 1000, RowSumVec
   }else{
   }
 
-  RBMGeneration <- function(Ncores){
+  RBMGeneration <- function(Ncores, SaveSparse = SaveSparse){
     iters <- EachCoreSims
     cc <- 0
     set.seed(Ncores*1000)
@@ -97,7 +97,7 @@ RandCoRegMatrix_Generation <- function(Ncores = 1,EachCoreSims = 1000, RowSumVec
     }
   }
   mc <- getOption("mc.cores", Ncores)
-  res <- parallel::mclapply(seq(1:Ncores), RBMGeneration, mc.cores = mc)
+  res <- parallel::mclapply(seq(1:Ncores), FUN = RBMGeneration, SaveSparse = SaveSparse, mc.cores = mc)
   return(paste0("Done, Please go and check the files in '",save_path,"'"))
 }
 
