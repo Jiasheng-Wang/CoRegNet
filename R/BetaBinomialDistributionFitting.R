@@ -37,19 +37,19 @@ BetaBinomialDistributionFitting<- function(FittingFile_Dir,Result_Dir, Ncores = 
 
     ##Generate the frame of output in "Result"
     Result <- data.frame(matrix(ncol = 7, nrow = nrow(FittingParameters), 0),stringsAsFactors = FALSE)
-    colnames(Result) <- c("File_idx","GenePair_Idx","mu","sigma","CoperturbationTimes","MaxCoperturbationTimes","Fitting_Pvalue")
+    colnames(Result) <- c("File_idx","GenePair_Idx","mu","sigma","CoregulationTimes","MaxCoregulationTimes","Fitting_Pvalue")
 
     ##Write part information into Result:
     Result$File_idx <- data_idx
     Result$GenePair_Idx <- FittingParameters$GenePair_Idx
-    Result$CoperturbationTimes <- FittingParameters$CoperturbationTimes
-    Result$MaxCoperturbationTimes <- FittingParameters$MaxCoperturbationTimes
+    Result$CoregulationTimes <- FittingParameters$CoregulationTimes
+    Result$MaxCoregulationTimes <- FittingParameters$MaxCoregulationTimes
 
     rm(FittingParameters)
     ##Start to do the fitting
     for (j in 1:nrow(Result)) {
       simdat <- as.numeric(FittingData[j,])
-      N <- Result$MaxCoperturbationTimes[j]
+      N <- Result$MaxCoregulationTimes[j]
       bdata <- cbind.data.frame("y" = simdat, "N" = N)
       invisible(capture.output(fit <- try(VGAM::vglm(cbind(y, N-y) ~ 1, family = VGAM::betabinomial, bdata, trace=TRUE), silent = TRUE)))
 
@@ -69,8 +69,8 @@ BetaBinomialDistributionFitting<- function(FittingFile_Dir,Result_Dir, Ncores = 
           Result$sigma[j] <- sigma
         }
         ##Calculate the corresponding Fitting_Pvalue:
-        B <- seq(from = Result$CoperturbationTimes[j], to = Result$MaxCoperturbationTimes[j], by = 1)
-        A <- sum(gamlss.dist::dBB(x = B,mu = mu,sigma = sigma,bd = Result$MaxCoperturbationTimes[j]))
+        B <- seq(from = Result$CoregulationTimes[j], to = Result$MaxCoregulationTimes[j], by = 1)
+        A <- sum(gamlss.dist::dBB(x = B,mu = mu,sigma = sigma,bd = Result$MaxCoregulationTimes[j]))
 
         Result$Fitting_Pvalue[j] <- A
       }

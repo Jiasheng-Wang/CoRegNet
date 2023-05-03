@@ -1,7 +1,7 @@
 Package: CoRegNet
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.1.0
+Version: 0.1.1
 Author: Jiasheng Wang
 Maintainer: Jiasheng Wang <jiasheng.wang@bcm.edu>
 Description: To generate Co-regulation Network based on integrated data sets

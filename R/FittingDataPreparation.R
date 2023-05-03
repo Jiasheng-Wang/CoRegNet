@@ -5,8 +5,8 @@
 #' This function prepares fitting files for the following step of betabinomial fitting.
 #'
 #' @param FittingFile_Dir The directory for betabinomial fitting
-#' @param Transform_CoPM_Dir The directory of transformed simulation-based Co-perturbation matrix in gene by simulation format
-#' @param CoPMatrix The real co-perturbation matrix
+#' @param Transform_CoM_Dir The directory of transformed simulation-based Co-perturbation matrix in gene by simulation format
+#' @param CoMatrix The real co-perturbation matrix
 #' @param SigIdx Index of gene pairs with significant simluation-based P-values
 #' @param P_cutoff The P-value threshold determining significant simulation-based P-values
 #' @param FittingFiles Number of files for following betabinomial fitting
@@ -15,15 +15,15 @@
 #' @export
 #'
 #' @examples
-#' FittingFile_Dir = "~/CopNet_Test/FittingData/", Transform_CoPM_Dir = "~/CopNet_Test/TransformedMatrix/", SigIdx = fitting_summary$qualified_gene_idx, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
+#' FittingFile_Dir = "~/FittingData/", Transform_CoM_Dir = "~/TransformedMatrix/", SigIdx = fitting_summary$qualified_gene_idx, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
-FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,SigIdx,P_cutoff,FittingFiles,trans_summary,Ncores){
+FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoMatrix,SigIdx,P_cutoff,FittingFiles,trans_summary,Ncores){
   if (dir.exists(FittingFile_Dir)) {
   }
   else {
     stop("Error, save_path not found")
   }
-  RealCoTimes <- CoPMatrix[upper.tri(CoPMatrix, diag = FALSE)]
+  RealCoTimes <- CoMatrix[upper.tri(CoMatrix, diag = FALSE)]
   Nfiles <- nrow(trans_summary)
   Assignment_table <- data.frame(matrix(nrow = Nfiles,
                                         ncol = 4))
@@ -43,21 +43,21 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
   }else {
   }
   RealCoTimes <- RealCoTimes[SigIdx]
-  ColsumVector <- diag(CoPMatrix)
-  Max_CoPTimes <- which(upper.tri(CoPMatrix, diag = FALSE),
+  ColsumVector <- diag(CoMatrix)
+  Max_CoRegTimes <- which(upper.tri(CoMatrix, diag = FALSE),
                         arr.in = TRUE)
-  Max_CoPTimes_sig <- Max_CoPTimes[SigIdx, ]
-  Max_CoPTimes <- cbind.data.frame(GenePair_Idx = SigIdx,
-                                   N1 = ColsumVector[Max_CoPTimes_sig[, 1]], N2 = ColsumVector[Max_CoPTimes_sig[,
+  Max_CoRegTimes_sig <- Max_CoRegTimes[SigIdx, ]
+  Max_CoRegTimes <- cbind.data.frame(GenePair_Idx = SigIdx,
+                                   N1 = ColsumVector[Max_CoRegTimes_sig[, 1]], N2 = ColsumVector[Max_CoRegTimes_sig[,
                                                                                                                 2]])
-  Max_CoPTimes$diff <- Max_CoPTimes$N1 - Max_CoPTimes$N2
-  Max_CoPTimes$MaxCoperturbationTimes <- ifelse(test = Max_CoPTimes$diff >
-                                                  0, yes = Max_CoPTimes$N2, no = Max_CoPTimes$N1)
-  Max_CoperturbationTimes <- Max_CoPTimes[, c("GenePair_Idx",
-                                              "MaxCoperturbationTimes")]
-  FITTINGPARAMETERS <- cbind.data.frame(Max_CoperturbationTimes,
-                                        CoperturbationTimes = RealCoTimes)
-  rm(Max_CoperturbationTimes, Max_CoPTimes, Max_CoPTimes_sig,
+  Max_CoRegTimes$diff <- Max_CoRegTimes$N1 - Max_CoRegTimes$N2
+  Max_CoRegTimes$MaxCoregulationTimes <- ifelse(test = Max_CoRegTimes$diff >
+                                                  0, yes = Max_CoRegTimes$N2, no = Max_CoRegTimes$N1)
+  Max_CoregulationTimes <- Max_CoRegTimes[, c("GenePair_Idx",
+                                              "MaxCoregulationTimes")]
+  FITTINGPARAMETERS <- cbind.data.frame(Max_CoregulationTimes,
+                                        CoregulationTimes = RealCoTimes)
+  rm(Max_CoregulationTimes, Max_CoRegTimes, Max_CoRegTimes_sig,
      RealCoTimes)
   gc()
   SplitContinuousNumber <- function(Number, nsplits) {
@@ -108,22 +108,22 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoPM_Dir,CoPMatrix,
   }
 
   if (Nfiles == 1) {
-    load(paste0(Transform_CoPM_Dir, "/TransformedMatrix_", 1,".RData"))
-    temp_TCoPM <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx), , drop = FALSE]
+    load(paste0(Transform_CoM_Dir, "/TransformedMatrix_", 1,".RData"))
+    temp_TCoM <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx), , drop = FALSE]
     for (j in 1:nrow(SplitMatrix)) {
-      FittingData <- temp_TCoPM[SplitMatrix$Start[j]:SplitMatrix$End[j], , drop = FALSE]
+      FittingData <- temp_TCoM[SplitMatrix$Start[j]:SplitMatrix$End[j], , drop = FALSE]
       save(x = FittingData, file = paste0(FittingFile_Dir, "/FittingFiles_", j, ".RData"))
     }
   }else{
     PP_FittingData <- function(FittingDataIdx){
       loading_k <- LoadingList[[FittingDataIdx]]
-      temp_TCoPM <- data.frame()
+      temp_TCoM <- data.frame()
       for (k in loading_k) {
-        load(paste0(Transform_CoPM_Dir, "/TransformedMatrix_", k, ".RData"))
+        load(paste0(Transform_CoM_Dir, "/TransformedMatrix_", k, ".RData"))
         GenePairsVsSims <- GenePairsVsSims[which(rownames(GenePairsVsSims) %in% SigIdx_list[[FittingDataIdx]]), , drop = FALSE]
-        temp_TCoPM <- rbind.data.frame(temp_TCoPM, GenePairsVsSims)
+        temp_TCoM <- rbind.data.frame(temp_TCoM, GenePairsVsSims)
       }
-      FittingData <- temp_TCoPM
+      FittingData <- temp_TCoM
       save(x = FittingData, file = paste0(FittingFile_Dir, "/FittingFiles_", FittingDataIdx, ".RData"))
     }
     mc <- getOption("mc.cores", Ncores)

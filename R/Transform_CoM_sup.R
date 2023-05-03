@@ -1,13 +1,8 @@
-RandCoPM_directory <- "~/CopNet_Test/RBM/"
-Ngenes <- 10
-NTransformedMatrix <- 1
-
-
 #' Sup function for matrix transformation
 #'
-#' This function generates a summary of transforming gene-gene co-perturbation matrix to GenePairs-Simulations matrix
+#' This function generates a summary of transforming gene-gene co-regulation matrix to GenePairs-Simulations matrix
 #'
-#' @param RandCoPM_directory The directory where simulated Co-perturbation matrix saved
+#' @param RandCoM_directory The directory where simulated Co-regulation matrix saved
 #' @param Ngenes Number of genes in the binary DEG matrix
 #' @param NTransformedMatrix Number of GenePair vs. SimTimes matrix required
 #'
@@ -15,10 +10,10 @@ NTransformedMatrix <- 1
 #' @export
 #'
 #' @examples
-#' trans_summary <- Transform_CoPM_sup(RandCoPM_directory = "~/RandBM/", Ngenes = 10, NTransformedMatrix = 1)
-Transform_CoPM_sup <- function(RandCoPM_directory, Ngenes, NTransformedMatrix = 1){
+#' trans_summary <- Transform_CoM_sup(RandCoM_directory = "~/RandBM/", Ngenes = 10, NTransformedMatrix = 1)
+Transform_CoM_sup <- function(RandCoM_directory, Ngenes, NTransformedMatrix = 1){
   NGenePairs <- (Ngenes^2 - Ngenes)/2
-  files<-list.files(RandCoPM_directory,full.names = T)
+  files<-list.files(RandCoM_directory,full.names = T)
   vect_size <- sapply(files, file.size)
   size_files <- sum(vect_size)/1024/1024
   sup_dataframe <- data.frame(matrix(nrow = NTransformedMatrix, ncol = 4))

@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' BBFitting_sup(SimP_Dir = "~/CopNet_Test/SimP/", P_cutoff = 0.05, FittingFiles= 5)
+#' BBFitting_sup(SimP_Dir = "~/SimP/", P_cutoff = 0.05, FittingFiles= 5)
 BBFitting_sup <- function(SimP_Dir, P_cutoff = 0.05, FittingFiles = 5){
   Nfiles <- list.files(SimP_Dir)
   Nfiles <- grep("SimP_",Nfiles)
