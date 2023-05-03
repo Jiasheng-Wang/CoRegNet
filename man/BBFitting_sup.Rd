@@ -20,5 +20,5 @@ A list contains the summary and qualified gene pair index
 This function can tell the plan of betabinomial fitting with some given parameters
 }
 \examples{
-BBFitting_sup(SimP_Dir = "~/CopNet_Test/SimP/", P_cutoff = 0.05, FittingFiles= 5)
+BBFitting_sup(SimP_Dir = "~/SimP/", P_cutoff = 0.05, FittingFiles= 5)
 }

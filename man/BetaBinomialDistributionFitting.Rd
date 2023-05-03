@@ -4,7 +4,12 @@
 \alias{BetaBinomialDistributionFitting}
 \title{BetaBinomialDistributionFitting}
 \usage{
-BetaBinomialDistributionFitting(FittingFile_Dir, Result_Dir, Ncores = 1)
+BetaBinomialDistributionFitting(
+  FittingFile_Dir,
+  Result_Dir,
+  Ncores = 1,
+  FittingIdx = "all"
+)
 }
 \arguments{
 \item{FittingFile_Dir}{The directory contains fitting data and fitting parameters}
@@ -12,6 +17,8 @@ BetaBinomialDistributionFitting(FittingFile_Dir, Result_Dir, Ncores = 1)
 \item{Result_Dir}{The directory for saving the results}
 
 \item{Ncores}{Number of cores to complete the task}
+
+\item{FittingIdx}{"all" to do fitting for all files in the FittingFile_Dir. Or a vector with number to indicate which data files to fit.}
 }
 \value{
 Result will be saved in .txt format

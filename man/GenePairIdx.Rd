@@ -4,12 +4,12 @@
 \alias{GenePairIdx}
 \title{Gene pair index to gene names}
 \usage{
-GenePairIdx(Idx, CoPMatrix)
+GenePairIdx(Idx, CoMatrix)
 }
 \arguments{
 \item{Idx}{The idx of gene pairs}
 
-\item{CoPMatrix}{The coperturbation matrix}
+\item{CoMatrix}{The coregulation matrix}
 }
 \value{
 The name of genes with corresponding index
@@ -18,5 +18,5 @@ The name of genes with corresponding index
 Gene pair index to gene names
 }
 \examples{
-GenePairIdx(Idx = fitting_summary$qualified_gene_idx, CoPMatrx = CoPMatrix)
+GenePairIdx(Idx = fitting_summary$qualified_gene_idx, CoMatrx = CoMatrix)
 }

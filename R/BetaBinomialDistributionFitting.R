@@ -91,7 +91,7 @@ BetaBinomialDistributionFitting<- function(FittingFile_Dir,Result_Dir, Ncores = 
   }else{
     print("Please make sure the FittingIdx is 'all' or a numeric vector")
   }
-  
+
 
   return(paste0("Done, Please go and check the files in '",Result_Dir,"'"))
 }

@@ -6,19 +6,21 @@
 \usage{
 FittingDataPreparation(
   FittingFile_Dir,
-  Transform_CoPM_Dir,
-  CoPMatrix,
+  Transform_CoM_Dir,
+  CoMatrix,
   SigIdx,
   P_cutoff,
-  FittingFiles
+  FittingFiles,
+  trans_summary,
+  Ncores
 )
 }
 \arguments{
 \item{FittingFile_Dir}{The directory for betabinomial fitting}
 
-\item{Transform_CoPM_Dir}{The directory of transformed simulation-based Co-perturbation matrix in gene by simulation format}
+\item{Transform_CoM_Dir}{The directory of transformed simulation-based Co-perturbation matrix in gene by simulation format}
 
-\item{CoPMatrix}{The real co-perturbation matrix}
+\item{CoMatrix}{The real co-perturbation matrix}
 
 \item{SigIdx}{Index of gene pairs with significant simluation-based P-values}
 
@@ -33,5 +35,5 @@ Files ready for fitting in the FittingFile_Dir
 This function prepares fitting files for the following step of betabinomial fitting.
 }
 \examples{
-FittingFile_Dir = "~/CopNet_Test/FittingData/", Transform_CoPM_Dir = "~/CopNet_Test/TransformedMatrix/", SigIdx = fitting_summary$qualified_gene_idx, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
+FittingFile_Dir = "~/FittingData/", Transform_CoM_Dir = "~/TransformedMatrix/", SigIdx = fitting_summary$qualified_gene_idx, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 }
