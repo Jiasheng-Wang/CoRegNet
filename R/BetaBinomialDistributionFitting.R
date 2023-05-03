@@ -5,6 +5,7 @@
 #' @param FittingFile_Dir The directory contains fitting data and fitting parameters
 #' @param Result_Dir The directory for saving the results
 #' @param Ncores Number of cores to complete the task
+#' @param FittingIdx "all" to do fitting for all files in the FittingFile_Dir. Or a vector with number to indicate which data files to fit.
 #'
 #' @return Result will be saved in .txt format
 #' @export
@@ -12,7 +13,7 @@
 #' @examples
 #' BetaBinomialDistributionFitting(FittingFile_Dir = "~/FittingData/",Result_Dir = "~/FittingResults/", Ncores = 2)
 
-BetaBinomialDistributionFitting<- function(FittingFile_Dir,Result_Dir, Ncores = 1){
+BetaBinomialDistributionFitting<- function(FittingFile_Dir,Result_Dir, Ncores = 1, FittingIdx = "all"){
   if(dir.exists(Result_Dir)){
   }else{
     stop("Error, save_path not found")
@@ -79,7 +80,12 @@ BetaBinomialDistributionFitting<- function(FittingFile_Dir,Result_Dir, Ncores = 
   }
 
   mc <- getOption("mc.cores", Ncores)
-  res <- parallel::mclapply(seq(1:NFittings), BetaBinomialFitting, mc.cores = mc)
+  if(FittingIdx == "all" | FittingIdx == "ALL" | FittingIdx == "All"){
+    res <- parallel::mclapply(seq(1:NFittings), BetaBinomialFitting, mc.cores = mc)
+  }else{
+    res <- parallel::mclapply(FittingIdx, BetaBinomialFitting, mc.cores = mc)
+  }
+  
 
   return(paste0("Done, Please go and check the files in '",Result_Dir,"'"))
 }
