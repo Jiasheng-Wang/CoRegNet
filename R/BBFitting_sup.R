@@ -42,7 +42,7 @@ BBFitting_sup <- function(SimP_Dir, P_cutoff = 0.05, FittingFiles = 5){
   info_summary2 <- vector("list",2)
   names(info_summary2) <- c("summary","qualified_gene_idx")
   info_summary2$summary <- info_summary
-  info_summary2$qualified_gene_idx <- IDX
+  info_summary2$qualified_gene_idx <- as.integer(IDX)
   return(info_summary2)
 
   }

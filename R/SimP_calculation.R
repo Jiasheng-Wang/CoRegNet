@@ -24,18 +24,18 @@ SimPCalculation <- function(transformed_CoM_Dir, save_path, CoTimes, trans_summa
   NTransformedMatrix <- grep("TransformedMatrix_",NTransformedMatrix)
   NTransformedMatrix <- length(NTransformedMatrix)
 
-  NGenePairs <- trans_summary[,2]
+  NGenePairs <- as.integer(trans_summary[,2])
   Assignment_table <- data.frame(matrix(nrow = NTransformedMatrix, ncol = 4))
   colnames(Assignment_table) <- c("idx","GenePairs","istart","iend")
   Assignment_table$idx <- seq(1,NTransformedMatrix)
   Assignment_table$GenePairs <- NGenePairs
-  Assignment_table$istart[1] <- 1
-  Assignment_table$iend[nrow(Assignment_table)] <- sum(Assignment_table$GenePairs)
+  Assignment_table$istart[1] <- 1L
+  Assignment_table$iend[nrow(Assignment_table)] <- as.integer(sum(Assignment_table$GenePairs))
 
   if (nrow(Assignment_table) >= 2) {
     for (ii in 1:(nrow(Assignment_table)-1)) {
-      Assignment_table$iend[ii] <- Assignment_table$istart[ii] + Assignment_table$GenePairs[ii] - 1
-      Assignment_table$istart[ii+1] <- Assignment_table$iend[ii] + 1
+      Assignment_table$iend[ii] <- Assignment_table$istart[ii] + Assignment_table$GenePairs[ii] - 1L
+      Assignment_table$istart[ii+1] <- Assignment_table$iend[ii] + 1L
     }
   }else{
 
