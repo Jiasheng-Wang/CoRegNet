@@ -29,7 +29,7 @@ BetaBinomialDistributionFitting<- function(FittingFile_Dir,Result_Dir, Ncores = 
     ##load data for fitting:
     load(paste0(FittingFile_Dir,"/FittingFiles_",data_idx,".RData"))
     ##Check if IDX are matched:
-    if(all(rownames(FittingParameters) == rownames(FittingData))){
+    if(all(FittingParameters$GenePair_Idx == rownames(FittingData))){
       #MATCHED!Continue
     }else{
       message("Gene Pair Index in Fitting Data and Fitting Parameters are NOT MATCHED! Fitting Terminated.")
