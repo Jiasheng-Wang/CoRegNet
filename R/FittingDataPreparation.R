@@ -30,26 +30,24 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoMatrix,Si
   colnames(Assignment_table) <- c("idx", "GenePairs", "istart",
                                   "iend")
   Assignment_table$idx <- seq(1, Nfiles)
-  Assignment_table$GenePairs <- trans_summary$`#GenePairs`
-  Assignment_table$istart[1] <- 1
-  Assignment_table$iend[nrow(Assignment_table)] <- sum(Assignment_table$GenePairs)
+  Assignment_table$GenePairs <- as.integer(trans_summary$`#GenePairs`)
+  Assignment_table$istart[1] <- 1L
+  Assignment_table$iend[nrow(Assignment_table)] <- as.integer(sum(Assignment_table$GenePairs))
   if (nrow(Assignment_table) >= 2) {
     for (ii in 1:(nrow(Assignment_table) - 1)) {
-      Assignment_table$iend[ii] <- Assignment_table$istart[ii] +
-        Assignment_table$GenePairs[ii] - 1
-      Assignment_table$istart[ii + 1] <- Assignment_table$iend[ii] +
-        1
+      Assignment_table$iend[ii] <- Assignment_table$istart[ii] + Assignment_table$GenePairs[ii] - 1L
+      Assignment_table$istart[ii + 1] <- Assignment_table$iend[ii] + 1L
     }
   }else {
   }
   RealCoTimes <- RealCoTimes[SigIdx]
   ColsumVector <- diag(CoMatrix)
   Max_CoRegTimes <- which(upper.tri(CoMatrix, diag = FALSE),
-                        arr.in = TRUE)
+                          arr.in = TRUE)
   Max_CoRegTimes_sig <- Max_CoRegTimes[SigIdx, ]
   Max_CoRegTimes <- cbind.data.frame(GenePair_Idx = SigIdx,
-                                   N1 = ColsumVector[Max_CoRegTimes_sig[, 1]], N2 = ColsumVector[Max_CoRegTimes_sig[,
-                                                                                                                2]])
+                                     N1 = ColsumVector[Max_CoRegTimes_sig[, 1]], N2 = ColsumVector[Max_CoRegTimes_sig[,
+                                                                                                                      2]])
   Max_CoRegTimes$diff <- Max_CoRegTimes$N1 - Max_CoRegTimes$N2
   Max_CoRegTimes$MaxCoregulationTimes <- ifelse(test = Max_CoRegTimes$diff >
                                                   0, yes = Max_CoRegTimes$N2, no = Max_CoRegTimes$N1)
@@ -57,6 +55,8 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoMatrix,Si
                                               "MaxCoregulationTimes")]
   FITTINGPARAMETERS <- cbind.data.frame(Max_CoregulationTimes,
                                         CoregulationTimes = RealCoTimes)
+  FITTINGPARAMETERS$MaxCoregulationTimes <- as.integer(FITTINGPARAMETERS$MaxCoregulationTimes)
+  FITTINGPARAMETERS$CoregulationTimes <- as.integer(FITTINGPARAMETERS$CoregulationTimes)
   rm(Max_CoregulationTimes, Max_CoRegTimes, Max_CoRegTimes_sig,
      RealCoTimes)
   gc()
