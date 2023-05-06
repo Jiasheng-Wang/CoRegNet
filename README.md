@@ -1,7 +1,7 @@
 # CoRegNet
  Co-Regulation Model: CoRegNet package Manual
 
-### Load your DEGMatrix: Each row is a contrast; Each column is a gene
+### Load your DEGMatrix: Each row is a gene; Each column is an experiment/contrast
 ### OR, here, as an example, you can use the following function to quickly create a qualified DEG Matrix
 DEGMatrix <- create_DEGMatrix()
 
