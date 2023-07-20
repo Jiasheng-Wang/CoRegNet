@@ -10,10 +10,10 @@ CoRegMatrix <- t(DEGMatrix) %*% DEGMatrix
 CoTimes <- CoRegMatrix[upper.tri(CoRegMatrix,diag = FALSE)]
 
 
-### Generate simulation-based co-perturbation matrix with fixed rowsum and colsum of binary DEG matrix:
+### Generate simulation-based co-regulation matrix with fixed rowsum and colsum of binary DEG matrix:
 RandCoRegMatrix_Generation(Ncores = 10, EachCoreSims = 50, RowSumVector = rowSums(DEGMatrix), ColSumVector = colSums(DEGMatrix),save_path = "~/CoregNet_Test/RBM/")
 
-### Transform the simulation-based co-perturbation matrix into gene by simulation format for p-value calculation:
+### Transform the simulation-based co-regulation matrix into gene by simulation format for p-value calculation:
 n <- 1
 
 trans_summary <- Transform_CoRegM_sup(RandCoRegM_directory = "~/CoregNet_Test/RBM/", Ngenes = ncol(DEGMatrix), NTransformedMatrix = n)
