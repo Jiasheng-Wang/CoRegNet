@@ -30,7 +30,7 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoMatrix,Si
   colnames(Assignment_table) <- c("idx", "GenePairs", "istart",
                                   "iend")
   Assignment_table$idx <- seq(1, Nfiles)
-  Assignment_table$GenePairs <- as.integer(trans_summary$GenePairs)
+  Assignment_table$GenePairs <- as.integer(trans_summary$`#GenePairs`)
   Assignment_table$istart[1] <- 1L
   Assignment_table$iend[nrow(Assignment_table)] <- as.integer(sum(Assignment_table$GenePairs))
   if (nrow(Assignment_table) >= 2) {
