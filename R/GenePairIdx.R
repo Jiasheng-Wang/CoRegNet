@@ -13,8 +13,8 @@
 GenePairIdx <- function(Idx, CoRegMatrix){
   temp <- which(upper.tri(CoRegMatrix, diag = FALSE), arr.ind = TRUE)
   temp <- temp[Idx,]
-  temp[,1] <- rownames(CoRegMatrix))[as.numeric(temp[,1])]
-  temp[,2] <- colnames(CoRegMatrix))[as.numeric(temp[,2])]
+  temp[,1] <- rownames(CoRegMatrix)[as.numeric(temp[,1])]
+  temp[,2] <- colnames(CoRegMatrix)[as.numeric(temp[,2])]
   temp <- as.data.frame(temp, stringsAsFactors = FALSE)
   temp <- cbind.data.frame(as.numeric(Idx), temp)
 

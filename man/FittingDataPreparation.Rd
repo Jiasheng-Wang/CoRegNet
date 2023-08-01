@@ -7,7 +7,7 @@
 FittingDataPreparation(
   FittingFile_Dir,
   Transform_CoM_Dir,
-  CoMatrix,
+  CoRegMatrix,
   SigIdx,
   P_cutoff,
   FittingFiles,
@@ -20,7 +20,7 @@ FittingDataPreparation(
 
 \item{Transform_CoM_Dir}{The directory of transformed simulation-based Co-perturbation matrix in gene by simulation format}
 
-\item{CoMatrix}{The real co-perturbation matrix}
+\item{CoRegMatrix}{The real co-perturbation matrix}
 
 \item{SigIdx}{Index of gene pairs with significant simluation-based P-values}
 
