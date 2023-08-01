@@ -5,7 +5,7 @@
 ### OR, here, as an example, you can use the following function to quickly create a qualified DEG Matrix
 DEGMatrix <- create_DEGMatrix()
 
-CoRegMatrix <- t(DEGMatrix) %*% DEGMatrix
+CoRegMatrix <- DEGMatrix %*% t(DEGMatrix)
 
 CoTimes <- CoRegMatrix[upper.tri(CoRegMatrix,diag = FALSE)]
 
@@ -16,12 +16,12 @@ RandCoRegMatrix_Generation(Ncores = 10, EachCoreSims = 50, RowSumVector = rowSum
 ### Transform the simulation-based co-regulation matrix into gene by simulation format for p-value calculation:
 n <- 1
 
-trans_summary <- Transform_CoRegM_sup(RandCoRegM_directory = "~/CoregNet_Test/RBM/", Ngenes = ncol(DEGMatrix), NTransformedMatrix = n)
+trans_summary <- Transform_CoM_sup(RandCoM_directory = "~/CoregNet_Test/RBM/", Ngenes = ncol(DEGMatrix), NTransformedMatrix = n)
 
-Transform_CoRegM(RandCoRegM_directory = "\~/CoregNet_Test/RBM/",save_path = "~/CoregNet_Test/TransformedMatrix/", NGenePairs = trans_summary[,2], NTransformedMatrix = n, Ncores = 1)
+Transform_CoM(RandCoM_directory = "\~/CoregNet_Test/RBM/",save_path = "~/CoregNet_Test/TransformedMatrix/", NGenePairs = trans_summary[,2], NTransformedMatrix = n, Ncores = 1)
 
 ### Calculate the simulation-based P-values
-SimPCalculation(transformed_CoRegM_Dir = "\~/CoregNet_Test/TransformedMatrix/", save_path = "~/CoregNet_Test/SimP/",CoTimes = CoTimes,trans_summary = trans_summary,Ncores = 2)
+SimP_calculation(transformed_CoRegM_Dir = "\~/CoregNet_Test/TransformedMatrix/", save_path = "~/CoregNet_Test/SimP/",CoTimes = CoTimes,trans_summary = trans_summary,Ncores = 2)
 
 ### Do beta binomial fitting only on those simulation p-value smaller than the cutoff to save time
 #Decide the p-value cutoff and number of cores to do betabinomial fittings:
@@ -31,11 +31,10 @@ FittingFiles <- 2
 
 fitting_summary <- BBFitting_sup(SimP_Dir = "~/CoregNet_Test/SimP/", P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
-fitting_summary_1 <- fitting_summary$summary
-
 ### Prepare files for Betabinomial fitting:
 FittingDataPreparation(FittingFile_Dir = "\~/CoregNet_Test/FittingData/",Transform_CoRegM_Dir = "~/CoregNet_Test/TransformedMatrix/",
-                       CoRegMatrix = CoRegMatrix, SigIdx = fitting_summary$qualified_gene_idx, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
+                       CoRegMatrix = CoRegMatrix, SigIdx = fitting_summary$qualified_gene_idx,
+                       trans_summary = trans_summary, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
 ### BetabinomialFitting:
 BetaBinomialDistributionFitting(FittingFile_Dir = "\~/CoregNet_Test/FittingData/",Result_Dir = "~/CoregNet_Test/FittingResults/", Ncores = 2)
