@@ -6,7 +6,7 @@
 #'
 #' @param FittingFile_Dir The directory for betabinomial fitting
 #' @param Transform_CoM_Dir The directory of transformed simulation-based Co-perturbation matrix in gene by simulation format
-#' @param CoMatrix The real co-perturbation matrix
+#' @param CoRegMatrix The real co-perturbation matrix
 #' @param SigIdx Index of gene pairs with significant simluation-based P-values
 #' @param P_cutoff The P-value threshold determining significant simulation-based P-values
 #' @param FittingFiles Number of files for following betabinomial fitting
@@ -17,13 +17,13 @@
 #' @examples
 #' FittingFile_Dir = "~/FittingData/", Transform_CoM_Dir = "~/TransformedMatrix/", SigIdx = fitting_summary$qualified_gene_idx, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
-FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoMatrix,SigIdx,P_cutoff,FittingFiles,trans_summary,Ncores){
+FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoRegMatrix,SigIdx,P_cutoff,FittingFiles,trans_summary,Ncores){
   if (dir.exists(FittingFile_Dir)) {
   }
   else {
     stop("Error, save_path not found")
   }
-  RealCoTimes <- CoMatrix[upper.tri(CoMatrix, diag = FALSE)]
+  RealCoTimes <- CoRegMatrix[upper.tri(CoRegMatrix, diag = FALSE)]
   Nfiles <- nrow(trans_summary)
   Assignment_table <- data.frame(matrix(nrow = Nfiles,
                                         ncol = 4))
@@ -41,8 +41,8 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoMatrix,Si
   }else {
   }
   RealCoTimes <- RealCoTimes[SigIdx]
-  ColsumVector <- diag(CoMatrix)
-  Max_CoRegTimes <- which(upper.tri(CoMatrix, diag = FALSE),
+  ColsumVector <- diag(CoRegMatrix)
+  Max_CoRegTimes <- which(upper.tri(CoRegMatrix, diag = FALSE),
                           arr.in = TRUE)
   Max_CoRegTimes_sig <- Max_CoRegTimes[SigIdx, ]
   Max_CoRegTimes <- cbind.data.frame(GenePair_Idx = SigIdx,
