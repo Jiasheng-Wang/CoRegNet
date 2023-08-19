@@ -32,7 +32,7 @@ FittingFiles <- 2
 fitting_summary <- BBFitting_sup(SimP_Dir = "~/CoregNet_Test/SimP/", P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
 ### Prepare files for Betabinomial fitting:
-FittingDataPreparation(FittingFile_Dir = "\~/CoregNet_Test/FittingData/",Transform_CoRegM_Dir = "~/CoregNet_Test/TransformedMatrix/",
+FittingDataPreparation(FittingFile_Dir = "\~/CoregNet_Test/FittingData/",Transform_CoM_Dir = "~/CoregNet_Test/TransformedMatrix/",
                        CoRegMatrix = CoRegMatrix, SigIdx = fitting_summary$qualified_gene_idx,
                        trans_summary = trans_summary, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
