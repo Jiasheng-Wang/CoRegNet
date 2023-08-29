@@ -21,7 +21,7 @@ trans_summary <- Transform_CoM_sup(RandCoM_directory = "~/CoregNet_Test/RBM/", N
 Transform_CoM(RandCoM_directory = "\~/CoregNet_Test/RBM/",save_path = "~/CoregNet_Test/TransformedMatrix/", NGenePairs = trans_summary[,2], NTransformedMatrix = n, Ncores = 1)
 
 ### Calculate the simulation-based P-values
-SimP_calculation(transformed_CoRegM_Dir = "\~/CoregNet_Test/TransformedMatrix/", save_path = "~/CoregNet_Test/SimP/",CoTimes = CoTimes,trans_summary = trans_summary,Ncores = 2)
+SimPCalculation(transformed_CoRegM_Dir = "\~/CoregNet_Test/TransformedMatrix/", save_path = "~/CoregNet_Test/SimP/",CoTimes = CoTimes,trans_summary = trans_summary,Ncores = 2)
 
 ### Do beta binomial fitting only on those simulation p-value smaller than the cutoff to save time
 #Decide the p-value cutoff and number of cores to do betabinomial fittings:
@@ -32,7 +32,7 @@ FittingFiles <- 2
 fitting_summary <- BBFitting_sup(SimP_Dir = "~/CoregNet_Test/SimP/", P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
 ### Prepare files for Betabinomial fitting:
-FittingDataPreparation(FittingFile_Dir = "\~/CoregNet_Test/FittingData/",Transform_CoRegM_Dir = "~/CoregNet_Test/TransformedMatrix/",
+FittingDataPreparation(FittingFile_Dir = "\~/CoregNet_Test/FittingData/",Transform_CoM_Dir = "~/CoregNet_Test/TransformedMatrix/",
                        CoRegMatrix = CoRegMatrix, SigIdx = fitting_summary$qualified_gene_idx,
                        trans_summary = trans_summary, P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
