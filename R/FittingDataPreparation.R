@@ -125,6 +125,8 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoRegMatrix
       }
       FittingData <- temp_TCoM
       save(x = FittingData, file = paste0(FittingFile_Dir, "/FittingFiles_", FittingDataIdx, ".RData"))
+      rm(FittingData,temp_TCoM,GenePairsVsSims)
+      gc()
     }
     mc <- getOption("mc.cores", Ncores)
     res <- parallel::mclapply(seq(1:nrow(SplitMatrix)), PP_FittingData, mc.cores = mc)
