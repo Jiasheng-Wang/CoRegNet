@@ -1,4 +1,5 @@
-# Please check our Recount3 CoRegNet via: http://CRN.liuzlab.org/
+# Please check our Recount3 CoRegNet via:
+http://CRN.liuzlab.org/
 
 # Co-Regulation Model: CoRegNet package Manual
 
