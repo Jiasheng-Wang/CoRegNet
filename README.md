@@ -1,5 +1,6 @@
-# CoRegNet
- Co-Regulation Model: CoRegNet package Manual
+# Please check our Recount3 CoRegNet via: http://CRN.liuzlab.org/
+
+# Co-Regulation Model: CoRegNet package Manual
 
 ### Load your DEGMatrix: Each row is a gene; Each column is an experiment/contrast
 ### OR, here, as an example, you can use the following function to quickly create a qualified DEG Matrix
