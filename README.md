@@ -4,8 +4,13 @@ http://CRN.liuzlab.org/
 # Co-Regulation Model: CoRegNet package Manual
 
 ### Load your DEGMatrix: Each row is a gene; Each column is an experiment/contrast
+### You can download DEGMatrix_Recount3_Subset.csv file, which contains a subset experiments from Recount3.
 ### OR, here, as an example, you can use the following function to quickly create a qualified DEG Matrix
 DEGMatrix <- create_DEGMatrix()
+
+## If you are using DEGMatrix_Recount3_Subset.csv file, it is recommended to run 'DEGMatrix <- DEGMatrix[rowSums(DEGMatrix) > 40,]' when you only take the data as an example.
+## This code keeps genes that are identified as DEGs in more than 40 experiments, and it will keep around 3000 genes in order to save computational power;
+## If you would like to get more accurate results, it is not recommended to set a lower threshold than 40 and keep more genes for the following analysis. 
 
 CoRegMatrix <- DEGMatrix %*% t(DEGMatrix)
 
