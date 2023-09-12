@@ -17,6 +17,7 @@ CoTimes <- CoRegMatrix[upper.tri(CoRegMatrix,diag = FALSE)]
 
 
 ### Step 2: Generate simulation-based co-regulation matrix with fixed rowsum and colsum of binary DEG matrix:
+#### *All paths/directories in the functions need to be created manually. In most cases the intermediate data/results are very large, so in order to aviod saving the intermediate data/results in an unexpected path, the functions don't provide creating paths automatically.* <br>dir.create() can be used to create a path/directory
 RandCoRegMatrix_Generation(Ncores = 10, EachCoreSims = 50, RowSumVector = rowSums(DEGMatrix), ColSumVector = colSums(DEGMatrix),save_path = "~/CoregNet_Test/RBM/")
 
 ### Step 3: Transform the simulation-based co-regulation matrix into gene by simulation format for p-value calculation:
@@ -33,7 +34,7 @@ SimPCalculation(transformed_CoRegM_Dir = "\~/CoregNet_Test/TransformedMatrix/", 
 #Decide the p-value cutoff and number of cores to do betabinomial fittings:
 P_cutoff <- 0.05
 
-FittingFiles <- 2
+FittingFiles <- 10
 
 fitting_summary <- BBFitting_sup(SimP_Dir = "~/CoregNet_Test/SimP/", P_cutoff = P_cutoff, FittingFiles = FittingFiles)
 
