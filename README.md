@@ -9,7 +9,7 @@ DEGMatrix <- create_DEGMatrix()
 
 #### If you are using *DEGMatrix_Recount3_Subset.csv* file and you only take it as an example, it is recommended to run: 
 DEGMatrix <- DEGMatrix[rowSums(DEGMatrix) > 40,]
-#### This code keeps genes that are identified as DEGs in more than 40 experiments, and it will keep around 3000 genes in order to save the computational power;<br> If you would like to get more accurate results, it is not recommended to set a lower threshold than 40 and keep more genes for the following analysis. 
+#### This code keeps genes that are identified as DEGs in more than 40 experiments, and it will keep around 3000 genes in order to save the computational power;<br> If you would like to get more accurate results, it is recommended to set a lower threshold than 40 and keep more genes for the following analysis.
 
 CoRegMatrix <- DEGMatrix %*% t(DEGMatrix)
 
