@@ -5,6 +5,8 @@ http://CRN.liuzlab.org/
 
 ### Step 1: Load your DEGMatrix: Each row is a gene; Each column is an experiment/contrast
 #### You can download *DEGMatrix_Recount3_Subset.csv* file, which contains a subset experiments from Recount3.<br>OR, here, as an example, you can use the following function to quickly create a qualified DEG Matrix
+remotes::install_github("Jiasheng-Wang/CoRegNet")
+library(CoRegNet)
 DEGMatrix <- create_DEGMatrix()
 
 #### If you are using *DEGMatrix_Recount3_Subset.csv* file and you only take it as an example, it is recommended to run: 
