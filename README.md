@@ -24,7 +24,11 @@ CoTimes <- CoRegMatrix[upper.tri(CoRegMatrix,diag = FALSE)]
 ### Step 2: Generate sampling-based co-regulation matrix with fixed rowsum and colsum of binary DEG matrix:
 #### *Users must manually create all paths/directories used in the functions. As intermediate data/results are often substantial in size, automatic path creation isn't enabled to prevent inadvertent storage in unintended locations.* <br>dir.create() can be used to create a path/directory
 <pre>
-RandCoRegMatrix_Generation(Ncores = 10, EachCoreSims = 50, RowSumVector = rowSums(DEGMatrix), ColSumVector = colSums(DEGMatrix),save_path = "~/CoregNet_Test/RBM/")
+RandCoRegMatrix_Generation(Ncores = 10,
+                           EachCoreSims = 100, #The number of total samplings is Ncores x EachCoreSims.
+                           RowSumVector = rowSums(DEGMatrix),
+                           ColSumVector = colSums(DEGMatrix),
+                           save_path = "~/CoregNet_Test/RBM/")
 </pre>
 ### Step 3: Transform the sampling-based co-regulation matrix into gene by simulation format for p-value calculation:
 <pre>
