@@ -54,7 +54,7 @@ Transform_CoM <- function(RandCoM_directory, save_path, NGenePairs, NTransformed
   }
 
   mc <- getOption("mc.cores", Ncores)
-  res <- parallel::mclapply(seq(1:NTransformedMatrix), GeneVsSims, mc.cores = mc)
+  res <- parallel::mclapply(seq(1,NTransformedMatrix), GeneVsSims, mc.cores = mc)
 
   return(paste0("Done, Please go and check the files in '",save_path,"'"))
 }

@@ -129,7 +129,7 @@ FittingDataPreparation <- function(FittingFile_Dir,Transform_CoM_Dir,CoRegMatrix
       gc()
     }
     mc <- getOption("mc.cores", Ncores)
-    res <- parallel::mclapply(seq(1:nrow(SplitMatrix)), PP_FittingData, mc.cores = mc)
+    res <- parallel::mclapply(seq(1,nrow(SplitMatrix)), PP_FittingData, mc.cores = mc)
 
   }
 

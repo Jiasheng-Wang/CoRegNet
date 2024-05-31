@@ -54,7 +54,7 @@ SimPCalculation <- function(transformed_CoRegM_Dir, save_path, CoTimes, trans_su
   }
 
   mc <- getOption("mc.cores", Ncores)
-  res <- parallel::mclapply(seq(1:NTransformedMatrix), SimP, mc.cores = mc)
+  res <- parallel::mclapply(seq(1,NTransformedMatrix), SimP, mc.cores = mc)
 
   return(paste0("Done, Please go and check the files in '",save_path,"'"))
 }

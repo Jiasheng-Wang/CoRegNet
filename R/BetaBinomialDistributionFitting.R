@@ -82,7 +82,7 @@ BetaBinomialDistributionFitting<- function(FittingFile_Dir,Result_Dir, Ncores = 
   mc <- getOption("mc.cores", Ncores)
   if(class(FittingIdx) == "character"){
     if(FittingIdx == "all" | FittingIdx == "ALL" | FittingIdx == "All"){
-        res <- parallel::mclapply(seq(1:NFittings), BetaBinomialFitting, mc.cores = mc)
+        res <- parallel::mclapply(seq(1,NFittings), BetaBinomialFitting, mc.cores = mc)
     }else{
       print("Please make sure the FittingIdx is 'all' or a numeric vector")
     }
